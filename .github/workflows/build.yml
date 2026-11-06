@@ -1,0 +1,24 @@
+name: Build APK
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Android package
+        uses: love-actions/love-actions-android@v2
+        with:
+          app-name: "Nova Squad"
+          bundle-id: "com.younis.novasquad"
+          resource-path: "./assets/android/res"
+          icon-specifier: "@mipmap/app"
+          love-package: "./game.love"
+          product-name: "novasquad"
+          version-string: "1.0.0"
+          version-code: 1
+          output-folder: "./build"
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: novasquad-apk
+          path: ./build/*.apk
